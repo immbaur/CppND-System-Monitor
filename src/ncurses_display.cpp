@@ -79,10 +79,8 @@ void NCursesDisplay::DisplayProcesses(std::vector<Process>& processes,
     mvwprintw(window, row, ram_column, processes[i].Ram().c_str());
     mvwprintw(window, row, time_column,
               Format::ElapsedTime(processes[i].UpTime()).c_str());
-    // mvwprintw(window, row, command_column, processes[i].Command().substr(0,
-    // window->_maxx - 46).c_str());
-    mvwprintw(window, row, command_column,
-              processes[i].Command().substr(0, getmaxx(stdscr) - 46).c_str());
+    mvwprintw(window, row, command_column, processes[i].Command().substr(0, window->_maxx - 46).c_str());
+    // mvwprintw(window, row, command_column, processes[i].Command().substr(0, getmaxx(stdscr) - 46).c_str());
   }
 }
 
@@ -94,9 +92,8 @@ void NCursesDisplay::Display(System& system, int n) {
 
   int x_max{getmaxx(stdscr)};
   WINDOW* system_window = newwin(9, x_max - 1, 0, 0);
-  // WINDOW* process_window = newwin(3 + n, x_max - 1, system_window->_maxy + 1,
-  // 0);
-  WINDOW* process_window = newwin(3 + n, x_max - 1, 9 + 1, 0);
+  WINDOW* process_window = newwin(3 + n, x_max - 1, system_window->_maxy + 1, 0);
+  // WINDOW* process_window = newwin(3 + n, x_max - 1, 9 + 1, 0);
 
   while (1) {
     init_pair(1, COLOR_BLUE, COLOR_BLACK);
